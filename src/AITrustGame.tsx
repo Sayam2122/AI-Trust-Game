@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckCircle, XCircle, Brain, FileText, TrendingDown, Briefcase, Heart, ArrowRight, Award, Film, Mail, AlertTriangle, Camera, Cloud } from 'lucide-react';
+
+type Choice = {
+  scenario: number;
+  choice: string;
+  correct: boolean;
+};
 
 const scenarios = [
   {
@@ -150,14 +156,14 @@ const patternOptions = [
 export default function AITrustGame() {
   const [screen, setScreen] = useState('intro');
   const [currentScenario, setCurrentScenario] = useState(0);
-  const [userChoice, setUserChoice] = useState(null);
-  const [selectedPatterns, setSelectedPatterns] = useState([]);
+  const [userChoice, setUserChoice] = useState<string | null>(null);
+  const [selectedPatterns, setSelectedPatterns] = useState<string[]>([]);
   const [patternSubmitted, setPatternSubmitted] = useState(false);
   const [reflectionText, setReflectionText] = useState({ for: '', notFor: '' });
   const [reflectionSubmitted, setReflectionSubmitted] = useState(false);
-  const [choices, setChoices] = useState([]);
+  const [choices, setChoices] = useState<Choice[]>([]);
 
-  const handleChoice = (choice) => {
+  const handleChoice = (choice: string) => {
     setUserChoice(choice);
     const newChoices = [...choices, { 
       scenario: currentScenario, 
@@ -176,7 +182,7 @@ export default function AITrustGame() {
     }
   };
 
-  const togglePattern = (pattern) => {
+  const togglePattern = (pattern: string) => {
     if (selectedPatterns.includes(pattern)) {
       setSelectedPatterns(selectedPatterns.filter(p => p !== pattern));
     } else {
